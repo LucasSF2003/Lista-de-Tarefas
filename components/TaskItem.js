@@ -1,49 +1,54 @@
-// components/TaskItem.js
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { Checkbox } from 'react-native-paper';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const TaskItem = ({ task, onToggle, onDelete }) => {
   return (
-    <View style={styles.taskContainer}>
-      <TouchableOpacity onPress={() => onToggle(task.id)} style={styles.checkboxContainer}>
-        <Checkbox
-          status={task.completed ? 'checked' : 'unchecked'}
-          onPress={() => onToggle(task.id)}
-          color="#28a745"
-        />
-        <Text style={[styles.taskText, task.completed && styles.completed]}>
-          {task.text}
-        </Text>
-      </TouchableOpacity>
+    <TouchableOpacity onPress={() => onToggle(task.id)} style={styles.container}>
+      <View style={[styles.checkbox, task.completed && styles.checked]}>
+        {task.completed && <MaterialCommunityIcons name="check" size={18} color="#fff" />}
+      </View>
+      <Text style={[styles.text, task.completed && styles.completed]}>
+        {task.text}
+      </Text>
       <TouchableOpacity onPress={() => onDelete(task.id)}>
-        <Icon name="trash" size={20} color="red" />
+        <MaterialCommunityIcons name="trash-can" size={24} color="red" />
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  taskContainer: {
+  container: {
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 10,
+    padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderColor: '#ccc',
   },
-  checkboxContainer: {
-    flexDirection: 'row',
+  checkbox: {
+    width: 24,
+    height: 24,
+    borderWidth: 2,
+    borderColor: '#000',
+    borderRadius: 12,
     alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
+    backgroundColor: 'transparent',
   },
-  taskText: {
+  checked: {
+    backgroundColor: '#4CAF50',
+    borderColor: '#4CAF50',
+  },
+  text: {
     fontSize: 18,
-    fontFamily: 'sans-serif', 
+    flex: 1,
   },
   completed: {
     textDecorationLine: 'line-through',
-    color: 'gray',
+    color: '#aaa',
   },
 });
 
